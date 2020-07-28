@@ -1,0 +1,84 @@
+class Gravitor{
+  float old_xPos;
+  float old_yPos;
+  float new_xPos;
+  float new_yPos;
+  float mass;
+  float radius;
+  
+  float xAccel;
+  float yAccel;
+  float xSpeed;
+  float ySpeed;
+  
+  Gravitor(float x, float y, float m, float r){
+    this.old_xPos = x;
+    this.old_yPos = y;
+    this.mass = m;
+    this.radius = r;
+    
+    this.xAccel = 0;
+    this.yAccel = 0;
+    this.xSpeed = 0;
+    this.ySpeed = 0;
+    
+    /*println("----------Init----------");
+    println("Accel: ", this.xAccel, " // ", this.yAccel);
+    println("Speed: ", this.xSpeed, " // ", this.ySpeed);
+    println("Pos: ", this.old_xPos, " // ", this.old_yPos);
+    println("Carac: ", this.mass, "//", this.radius);*/
+  }
+  
+  void update(){
+    this.xAccel = 0;
+    this.yAccel = 0;
+    
+    float currForce;
+    float currAccel;
+    float currAngle;
+    for(Gravitor gravitor : system){
+      if(this == gravitor){
+        continue;
+      }
+      currForce = 0;
+      currAccel = 0;
+      currAngle = 0;
+      
+      currForce = coeffVisual*G*(this.mass*gravitor.mass)/dist(this, gravitor);
+      currAccel = currForce/this.mass;
+      
+      float x = this.old_xPos - gravitor.old_xPos;
+      float y = this.old_yPos - gravitor.old_yPos;
+      if(x>=0 && y>=0){
+        currAngle = acos(abs(x)/dist(this, gravitor));
+      } else if(x<=0 && y<=0){
+        currAngle = PI + acos(abs(x)/dist(this, gravitor));
+      } else if(x<=0 && y>=0){
+        currAngle = - acos(abs(x)/dist(this, gravitor));
+      } else if(x>=0 && y<=0){
+        currAngle = PI - acos(abs(x)/dist(this, gravitor));
+      } else {
+        println("ERROR");
+        noLoop();
+        break;
+      }
+      
+      this.xAccel = currAccel*cos(currAngle);
+      this.yAccel = currAccel*sin(currAngle);
+    }
+    
+    this.xSpeed += this.xAccel*dt;
+    this.ySpeed += this.yAccel*dt;
+    
+    this.new_xPos = this.old_xPos + this.xSpeed*dt;
+    this.new_yPos = this.old_yPos + this.ySpeed*dt;
+  }
+  
+  void display(){
+    fill(255, 100);
+    ellipse(this.old_xPos, this.old_yPos, 2*this.radius, 2*this.radius);
+  
+    this.old_xPos = this.new_xPos;
+    this.old_yPos = this.new_yPos;
+  }
+}
