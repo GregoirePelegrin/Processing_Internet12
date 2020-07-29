@@ -9,21 +9,29 @@ ArrayList<Gravitor> system;
 void setup(){
   size(600, 600);
   frameRate(30);
+  colorMode(HSB);
   
   nbrGravitors = 2;
   system = new ArrayList<Gravitor>();
   for(int i=0; i<nbrGravitors; i++){
-    float x = random(width);
-    float y = random(height);
-    float m = random(random(1, 3), random(50, 100));
-    float r = random(10, 50);
-    Gravitor gravitor = new Gravitor(x, y, m, r);
+    float x = random(random(width/4, width/3), random(2*width/3, 3*width/4));
+    float y = random(random(height/4, height/3), random(2*height/3, 3*height/4));
+    float xs = random(10);
+    float ys = random(10);
+    float m = random(random(1, 3), random(10, 20));
+    float r = random(10, 20);
+    float h = random(127);
+    float s = random(255);
+    float b = random(255);
+    Gravitor gravitor = new Gravitor(x, y, xs, ys, m, r, h, s, b);
     system.add(gravitor);
   }
+  
+  background(0);
 }
 
 void draw(){
-  background(0);
+  //background(0);
   
   for(Gravitor gravitor : system){
     gravitor.update();

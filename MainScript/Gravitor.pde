@@ -11,7 +11,11 @@ class Gravitor{
   float xSpeed;
   float ySpeed;
   
-  Gravitor(float x, float y, float m, float r){
+  float hue;
+  float saturation;
+  float brightness;
+  
+  Gravitor(float x, float y, float xs, float ys, float m, float r, float h, float s, float b){
     this.old_xPos = x;
     this.old_yPos = y;
     this.mass = m;
@@ -19,8 +23,12 @@ class Gravitor{
     
     this.xAccel = 0;
     this.yAccel = 0;
-    this.xSpeed = 0;
-    this.ySpeed = 0;
+    this.xSpeed = xs;
+    this.ySpeed = ys;
+    
+    this.hue = h;
+    this.saturation = s;
+    this.brightness = b;
     
     /*println("----------Init----------");
     println("Accel: ", this.xAccel, " // ", this.yAccel);
@@ -54,9 +62,9 @@ class Gravitor{
       float x = this.old_xPos - gravitor.old_xPos;
       float y = this.old_yPos - gravitor.old_yPos;
       if(x>=0 && y>=0){
-        currAngle = acos(abs(x)/dist(this, gravitor));
-      } else if(x<=0 && y<=0){
         currAngle = PI + acos(abs(x)/dist(this, gravitor));
+      } else if(x<=0 && y<=0){
+        currAngle = acos(abs(x)/dist(this, gravitor));
       } else if(x<=0 && y>=0){
         currAngle = - acos(abs(x)/dist(this, gravitor));
       } else if(x>=0 && y<=0){
@@ -79,7 +87,8 @@ class Gravitor{
   }
   
   void display(){
-    fill(255, 100);
+    fill(this.hue, this.saturation, this.brightness, 50);
+    noStroke();
     ellipse(this.old_xPos, this.old_yPos, 2*this.radius, 2*this.radius);
   
     this.old_xPos = this.new_xPos;
