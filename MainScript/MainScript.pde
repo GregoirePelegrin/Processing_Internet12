@@ -1,9 +1,7 @@
-// Rectifier l'orientation des vecteurs... La ca part toujours a 
-// la verticale
-
 float G = 10;
 float dt = 0.1;
 float coeffVisual = 100;
+float limForce = 150;
 
 int nbrGravitors;
 ArrayList<Gravitor> system;
@@ -35,9 +33,8 @@ void draw(){
   }
 }
 
-//Will return the square of the distance
 float dist(Gravitor g1, Gravitor g2){
   float distance;
   distance = pow((g1.old_xPos-g2.old_xPos), 2) + pow((g1.old_yPos-g2.old_yPos), 2);
-  return distance;
+  return pow(distance, 0.5);
 }

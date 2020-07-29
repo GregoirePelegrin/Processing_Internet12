@@ -45,7 +45,11 @@ class Gravitor{
       currAngle = 0;
       
       currForce = coeffVisual*G*(this.mass*gravitor.mass)/dist(this, gravitor);
-      currAccel = currForce/this.mass;
+      if(abs(currForce) > limForce){
+        currAccel = currForce*limForce/( abs(currForce)*this.mass);
+      } else {
+        currAccel = currForce/this.mass;
+      }
       
       float x = this.old_xPos - gravitor.old_xPos;
       float y = this.old_yPos - gravitor.old_yPos;
