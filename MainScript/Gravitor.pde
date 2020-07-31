@@ -75,8 +75,8 @@ class Gravitor{
         break;
       }
       
-      this.xAccel = currAccel*cos(currAngle);
-      this.yAccel = currAccel*sin(currAngle);
+      this.xAccel += currAccel*cos(currAngle);
+      this.yAccel += currAccel*sin(currAngle);
     }
     
     this.xSpeed += this.xAccel*dt;
